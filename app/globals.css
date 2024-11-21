@@ -12,9 +12,16 @@
   display: none;
 }
 
+.skeleton-article {
+  width: 100%; /* Pastikan lebar 100% */
+  height: auto; /* Atur tinggi sesuai kebutuhan */
+  /* Tambahkan properti lain jika diperlukan */
+}
+
 article {
   width: 100%;
 }
+
 
 @layer base {
   :root {
