@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import { getUsers, User } from './api/getUsers';
 import { useState, useEffect } from 'react';
 
 // array dummy data
@@ -42,42 +42,27 @@ const NamaOrang = {
     usia:'23 tahun'
 };
 
-// const from api
-interface User {
-    id: number;
-    name: string;
-    email: string;
-    // Tambahkan properti lain sesuai dengan respons API
-}
-
 const Page = () => {
-
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('/api/getUsers');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const data: User[] = await response.json();
-                setUsers(data);
+                const userData = await getUsers();
+                setUsers(userData);
             } catch (err) {
-                console.error('Error fetching users:', err);
-                setError('Failed to load user data');
+                setError((err as Error).message);
             } finally {
                 setLoading(false);
             }
         };
-      
+    
         fetchData();
     }, []);
 
-    if (loading) return <div className="spinner">Loading...</div>;
-    if (error) return <p>{error}</p>;
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <section className="py-12 xl:py-24 xl:h-[95vh] xl:pt-[220px] pt-[120px] bg-white dark:bg-transparent font-[family-name:var(--font-geist-sans)]">
@@ -117,13 +102,16 @@ const Page = () => {
                     )
                 })}
 
-                {users.map((user)=>{
-                    return (
-                    <div key={user.id} className="ml-[10px] inline-flex items-center px-3 py-[1px] rounded-full text-sm dark:bg-primary bg-slate-400 text-white">
+                <hr className='mt-10 mb-10'/>
+
+                {users.map((user, index) => (
+                    // komponen
+                    <div key={index} className="ml-[10px] inline-flex items-center px-3 py-[1px] rounded-full text-sm dark:bg-primary bg-slate-400 text-white">
                         {user.name}
                     </div>
-                    )
-                })}
+                    ))
+                }
+
             </div>
         </section>
     )

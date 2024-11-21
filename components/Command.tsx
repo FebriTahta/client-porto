@@ -1,13 +1,13 @@
 "use client"
 import * as React from "react"
-import {
-  Calculator,
-  Calendar,
-  CreditCard,
-  Settings,
-  Smile,
-  User,
-} from "lucide-react"
+// import {
+//   Calculator,
+//   Calendar,
+//   CreditCard,
+//   Settings,
+//   Smile,
+//   User,
+// } from "lucide-react"
 
 import {
   CommandDialog,
@@ -17,10 +17,10 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
+  // CommandShortcut,
 } from "@/components/ui/command"
 
-export function Command() {
+export function Command({tags}:{tags:Array<{name: string}>}) {
   const [open, setOpen] = React.useState(false)
 
   React.useEffect(() => {
@@ -58,37 +58,30 @@ export function Command() {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Suggestions">
-            <CommandItem>
-              <Calendar />
-              <span>Calendar</span>
-            </CommandItem>
-            <CommandItem>
-              <Smile />
-              <span>Search Emoji</span>
-            </CommandItem>
-            <CommandItem>
-              <Calculator />
-              <span>Calculator</span>
-            </CommandItem>
+          {
+            Array.from(new Set(tags.map((tag) => tag.name))).map((uniqueName, index) => (
+              <CommandItem key={index}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 30 30"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6.75 8.25v11.25a2.25 2.25 0 002.25 2.25h8.25a2.25 2.25 0 002.25-2.25V8.25m-12.75 0h13.5M6.75 8.25A2.25 2.25 0 014.5 6m13.5 0A2.25 2.25 0 0118 8.25m0-2.25H6a2.25 2.25 0 00-2.25 2.25m0 0h15m0 0V18m-15 0V8.25"
+                  />
+                </svg>
+                <span>{uniqueName}</span>
+              </CommandItem>
+            ))
+          }
+
           </CommandGroup>
           <CommandSeparator />
-          <CommandGroup heading="Settings">
-            <CommandItem>
-              <User />
-              <span>Profile</span>
-              <CommandShortcut>⌘P</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <CreditCard />
-              <span>Billing</span>
-              <CommandShortcut>⌘B</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <Settings />
-              <span>Settings</span>
-              <CommandShortcut>⌘S</CommandShortcut>
-            </CommandItem>
-          </CommandGroup>
         </CommandList>
       </CommandDialog>
     </>

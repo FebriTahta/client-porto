@@ -3,14 +3,14 @@ import { faReact, faJs, faGit, faLaravel, faPhp } from '@fortawesome/free-brands
 import { faDatabase } from '@fortawesome/free-solid-svg-icons';
 
 type BadgeProps = {
-  icon: string | JSX.Element;
+  icon?: string | JSX.Element;
   text: string;
-  className: string;
+  className?: string;
 };
 
 export function Badge({ icon, text, className }: BadgeProps) {
   return (
-    <span className={`inline-flex items-center px-3 py-[1px] rounded-full text-sm ${className}`}>
+    <span className={`${className}`}>
       {typeof icon === 'string' ? (
         <FontAwesomeIcon icon={
           icon === 'faReact' ? faReact :

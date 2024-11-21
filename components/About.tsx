@@ -1,8 +1,8 @@
 import React from 'react';
-import Image from 'next/image';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/Badge';
 import { Socials } from '@/components/Socials';
+import DevImage from './DevImage';
 
 const TechSkill = [
   {
@@ -134,22 +134,10 @@ const About = () => {
       <div className="flex flex-col items-center text-center">
         <div className="relative w-[300px] h-[300px] mx-auto text-center">
           <div className="hidden dark:block">
-            <Image 
-              src="/me.jpeg"
-              alt="Profile Dark"
-              fill
-              priority
-              className="object-cover rounded-full"
-            />
+            <DevImage src={'/me.jpeg'} />
           </div>
           <div className="block dark:hidden">
-            <Image 
-              src="/t-logo.png" 
-              alt="Profile Light"
-              fill
-              priority
-              className="object-cover rounded-full"
-            />
+            <DevImage src={'/t-logo.png'} />
           </div>
         </div>
 
@@ -197,7 +185,11 @@ const About = () => {
                       {/* perwakilan item yang akan ditata dari array tech_list, perwakilan tech diurutkan berdasarkan techIndex */}
                       {
                         item.tech_list.map((tech, techIndex) => (
-                          <Badge key={techIndex} icon={tech.icon} text={tech.text} className={tech.style} />
+                          <Badge 
+                            key={techIndex} 
+                            icon={tech.icon} 
+                            text={tech.text} 
+                            className={`inline-flex items-center px-3 py-[1px] rounded-full text-sm ${tech.style}`} />
                         ))
                       }
 
