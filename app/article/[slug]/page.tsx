@@ -1,6 +1,8 @@
 import { Metadata } from "next";
-import { Article } from "../api/getArticles";
+import { Article, fetchArticle } from "../api/getArticles";
 import Link from "next/link";
+import CardTitle from "@/components/custom/CardTitle";
+import CardBody from "@/components/custom/CardBody";
 
 interface ArticlePageProps {
   article: Article | null; // berdasarkan struktur interface Article
@@ -20,23 +22,6 @@ export async function generateMetadata({
   };
 }
 
-// Fungsi untuk mengambil data artikel
-async function fetchArticle(slug: string) {
-  const response = await fetch(
-    process.env.NEXT_PUBLIC_BASE_URL_DEV + "/article/" + slug,
-    {
-      cache: "no-cache", // Tidak menggunakan cache agar selalu mendapatkan data terbaru dari server
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch article data");
-  }
-
-  const result = await response.json();
-  return result.data;
-}
-
 const Page = async ({ params }: ArticlePageProps) => {
   const { slug } = params;
 
@@ -44,7 +29,7 @@ const Page = async ({ params }: ArticlePageProps) => {
     const article = await fetchArticle(slug);
 
     return (
-      <section className="flex py-12 xl:py-24 xl:h-[95vh] xl:pt-[150px] pt-[120px] bg-white dark:bg-transparent font-[family-name:var(--font-geist-mono)]">
+      <section className="flex py-12 xl:py-24 xl:h-[95vh] xl:pt-[140px] pt-[120px] bg-white dark:bg-transparent font-[family-name:var(--font-geist-mono)]">
         <div className="container mx-auto">
           <div className="flex items-center gap-2 mb-8 text-sm text-muted-foreground">
             <svg
@@ -66,8 +51,12 @@ const Page = async ({ params }: ArticlePageProps) => {
             <span>|</span>
             <span>{article.title}</span>
           </div>
-          <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
-          <div className="text-lg">{article.body}</div>
+          <CardTitle>
+            <h1 className="text-3xl uppercase font-bold">{article.title}</h1>
+          </CardTitle>
+          <CardBody>
+            <div className="text-lg" dangerouslySetInnerHTML={{ __html: article.body }}></div>
+          </CardBody>
         </div>
       </section>
     );

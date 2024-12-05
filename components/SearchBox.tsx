@@ -18,7 +18,7 @@ const SearchBox = () => {
   };
 
   return (
-    <div className="relative w-full max-w-md mx-auto">
+    <div className="relative w-full max-w-sm mx-auto">
       <div className="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-sm">
         <Search className="w-5 h-5 text-gray-500 dark:text-gray-400" />
         <input

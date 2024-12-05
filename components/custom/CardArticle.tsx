@@ -26,10 +26,10 @@ const CardArticle = () => {
     const fetchData = async () => {
       try {
         const articleData: ArticlesResponse = await getArticles();
-        console.log(articleData);
         
         if (Array.isArray(articleData.data)) {
           setArticles(articleData.data);
+          
         } else {
           throw new Error("Data yang diterima bukan array");
         }
@@ -51,7 +51,7 @@ const CardArticle = () => {
   }, []);
 
   return (
-    <>
+    <div className="xl:w-[782px]">
       {loading || error ? (
         <>
           <SkeletonArticle className="w-[340px] lg:w-[780px]" />
@@ -65,7 +65,7 @@ const CardArticle = () => {
           >
             <div className="flex justify-between items-center mb-5 text-gray-500">
               {/* Tags */}
-              <div className="space-x-2 gap-1 lg:gap-4 xl:gap-4 md:gap-auto lg:flex flex-row xl:flex-row md:flex-row">{article.tags.map((tag, index) => (
+              <div className="space-x-2 gap-1 lg:gap-4 xl:gap-4 md:gap-auto lg:falex flex-row xl:flex-row md:flex-row">{article.tags.map((tag, index) => (
                 <Badge 
                   key={index} 
                   icon={<svg
@@ -98,7 +98,7 @@ const CardArticle = () => {
               <Link href={'/article/'+article.slug}>{article.title}</Link>
             </h2>
             <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
-              {truncateBody(article.body, 200)}...
+              {truncateBody(article.body, 150)}
             </p>
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-4">
@@ -118,7 +118,7 @@ const CardArticle = () => {
       )}
 
       {error && <p className="text-red-500 text-sm mt-4">{errorMessage}</p>}
-    </>
+    </div>
   );
 };
 

@@ -4,8 +4,8 @@ const Page = () => {
 
   return (
     <>
-    <section className="flex py-12 xl:py-24 xl:h-[95vh] xl:pt-[150px] pt-[120px] bg-white dark:bg-transparent font-[family-name:var(--font-geist-mono)]">
-      <div className="container mx-auto">
+    <div className="flex py-12 xl:py-24 xl:h-[95vh] xl:pt-[140px] pt-[120px] bg-white dark:bg-transparent font-[family-name:var(--font-geist-mono)]">
+      <div className="container mx-auto w-full">
         <div className="flex items-center gap-2 mb-8 text-sm text-muted-foreground">
           <svg
             className="w-4 h-4"
@@ -37,7 +37,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
     </>
   );
 };
