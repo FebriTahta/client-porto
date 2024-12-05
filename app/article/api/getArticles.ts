@@ -26,25 +26,17 @@ export interface ArticlesResponse {
 }
 
 // list article
-export const getArticles = async (): Promise<ArticlesResponse> => {
-  const url = listArticleUrl;
+export const getArticles = async (page: number = 1): Promise<ArticlesResponse> => {
+  const url = `${listArticleUrl}?page=${page}`;
   try {
-    const response = await fetch(url, {
-      cache: "no-cache", // Tidak menggunakan cache agar selalu mendapatkan data terbaru dari server
-    });
+    const response = await fetch(url, { cache: "no-cache" });
     if (!response.ok) {
-      throw new Error(
-        `HTTP Error: ${response.status} - ${response.statusText}`
-      );
+      throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
     }
     return await response.json();
   } catch (error) {
-    if (error instanceof Error) {
-      console.log("Gagal mengambil artikel:", error.message);
-    } else {
-      console.log("Tidak diketahui:", error);
-    }
-    throw error; // Lempar kembali error agar dapat ditangani di tempat lain
+    console.error("Gagal mengambil artikel:", error);
+    throw error;
   }
 };
 
