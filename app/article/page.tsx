@@ -1,4 +1,4 @@
-import ArticleList from "@/components/ArticleList";
+import CardArticle from "@/components/custom/CardArticle";
 
 const Page = () => {
 
@@ -33,7 +33,7 @@ const Page = () => {
             </p>
           </div>
           <div className="flex-1 flex flex-col items-start font-[family-name:var(--font-geist-mono)]">
-            <ArticleList />
+            <CardArticle />
           </div>
         </div>
       </div>

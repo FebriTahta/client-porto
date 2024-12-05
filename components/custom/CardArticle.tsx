@@ -51,10 +51,10 @@ const CardArticle = () => {
   }, []);
 
   return (
-    <div className="xl:w-[782px]">
+    <div className="w-full max-w-full">
       {loading || error ? (
         <>
-          <SkeletonArticle className="w-[340px] lg:w-[780px]" />
+          <SkeletonArticle/>
         </>
       ) : (
         
