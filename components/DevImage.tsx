@@ -6,15 +6,17 @@ type imageProps = {
 
 const DevImage = ({src}:imageProps) => {
   return (
-    <>
-        <Image 
-            src={src}
-            alt="Profile Dark"
-            fill
-            priority
-            className="object-cover rounded-full"
-        />
-    </>
+    <div style={{ position: 'relative', width: '300px', height: '300px', borderRadius: '50%', overflow: 'hidden' }}>
+    <Image 
+        src={src}
+        alt="Logo"
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+        priority
+        className="object-cover rounded-full"
+    />
+</div>
+
   )
 }
 

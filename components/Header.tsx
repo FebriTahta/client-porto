@@ -53,8 +53,15 @@ const ListItem = ({
 
 ListItem.displayName = "ListItem";
 
+// Fungsi untuk mendapatkan cookie
+const getCookie = (name: string): string | null => {
+  const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+  return match ? decodeURIComponent(match[2]) : null;
+};
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State untuk login
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,9 +69,30 @@ export default function Header() {
       setIsScrolled(offset > 0);
     };
 
+    // Periksa status login dari cookie
+    const checkLoginStatus = () => {
+      const token = getCookie("jwtToken"); // Ambil token dari cookie
+      setIsLoggedIn(!!token); // Jika ada token, anggap sudah login
+    };
+
+    checkLoginStatus(); // Panggil saat komponen dimuat
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+
   }, []);
+
+  // Fungsi login
+  const handleLogin = () => {
+    window.location.href = "/login"; // Redirect ke halaman login
+  };
+
+  // Fungsi logout
+  const handleLogout = () => {
+    // Hapus cookie dengan token JWT
+    document.cookie = "jwtToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    setIsLoggedIn(false);
+    window.location.href = "/"; // Redirect ke halaman utama
+  };
 
   const components: {
     title: string;
@@ -86,17 +114,24 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full transition-all duration-300 z-50 ${
         isScrolled ? "shadow-md bg-white dark:bg-gray-950" : ""
-      } z-50`}
+      }`}
     >
       <div className="container mx-auto lg:px-8 py-2">
         <div className="pl-6 pr-6 pt-2 pb-2 flex justify-between items-center">
           {/* Left side: Logo and Links */}
-          <div className="flex items-center gap-6">
-            <div className="text-xl font-bold">
-              <Link href="/">
-                <Image src={Logo} alt="Logo" width={40} height={40} />
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center">
+              <Link href="/" className="flex items-center">
+                <Image
+                  src={Logo}
+                  alt="Logo"
+                  width={40}
+                  height={40}
+                  className="w-auto h-auto sm:w-10 sm:h-10 md:w-12 md:h-12" // Ukuran responsif
+                  priority // Optimalkan logo untuk loading awal
+                />
               </Link>
             </div>
 
@@ -170,6 +205,25 @@ export default function Header() {
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
+                {isLoggedIn ? (
+                  <NavigationMenuItem>
+                    <button
+                      className={`${navigationMenuTriggerStyle()}`}
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </NavigationMenuItem>
+                ) : (
+                  <NavigationMenuItem>
+                    <button
+                      className={`${navigationMenuTriggerStyle()}`}
+                      onClick={handleLogin}
+                    >
+                      Login
+                    </button>
+                  </NavigationMenuItem>
+                )}
               </NavigationMenuList>
             </NavigationMenu>
           </div>

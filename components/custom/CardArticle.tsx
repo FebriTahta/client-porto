@@ -1,15 +1,12 @@
-"use client"
-
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { getArticles, Article, ArticlesResponse } from "@/app/article/api/getArticles";
 import { SkeletonArticle } from "@/components/custom/SkeletonArticle";
+import { Article } from "@/app/article/api/getArticles";
 import { formatRelativeDateTime } from "@/lib/formatRelativeDateTime";
 import { Badge } from "../Badge";
 import { ReadMore } from "../ReadMore";
 import Link from "next/link";
 import Paginations from "./Paginations";
-import { PaginationData } from "./Paginations";
+import { PaginationData } from "@/components/custom/Paginations";
 
 const truncateBody = (body: string | undefined, maxLength: number): string => {
   if (!body) return "";
@@ -18,64 +15,23 @@ const truncateBody = (body: string | undefined, maxLength: number): string => {
   return truncated.slice(0, Math.max(truncated.lastIndexOf(" "), 0));
 };
 
-const CardArticle = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [pagination, setPagination] = useState<PaginationData>({
-    currentPage: 1,
-    nextPage: null,
-    previousPage: null,
-    totalPages: 0,
-  });
+interface CardArticleProps {
+  articles: Article[]; //interface
+  loading: boolean;
+  error: boolean;
+  errorMessage: string | null;
+  pagination: PaginationData; //interface
+  handlePageChange: (page: number) => void;
+}
 
-  // State untuk halaman aktif
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
-  useEffect(() => {
-
-    const fetchData = async () => {
-      try {
-        const articleData: ArticlesResponse = await getArticles(currentPage);
-        
-        if (Array.isArray(articleData.data)) {
-          
-          setArticles(articleData.data);
-
-          setPagination({
-            currentPage: articleData.currentPage,
-            nextPage: articleData.nextPage,
-            previousPage: articleData.previousPage,
-            totalPages: articleData.totalPages,
-          });
-          
-        } else {
-          throw new Error("Data yang diterima bukan array");
-        }
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.log("Terjadi kesalahan saat mengambil data:", err.message);
-          setErrorMessage("Kesalahan tidak diketahui: " + err.message);
-        } else {
-          console.log("Kesalahan tidak diketahui:", err);
-          setErrorMessage("Kesalahan tidak diketahui: " + err);
-        }
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [currentPage]); // Pemicu fetching data saat halaman aktif berubah
-
-  // Fungsi untuk mengubah halaman
-   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    
-  };
-
+const CardArticle: React.FC<CardArticleProps> = ({
+  articles,
+  loading,
+  error,
+  errorMessage,
+  pagination,
+  handlePageChange,
+}) => {
   return (
     <div className="w-full max-w-full">
       
@@ -102,7 +58,8 @@ const CardArticle = () => {
               >
                 <div className="flex justify-between items-center mb-5 text-gray-500">
                   {/* Tags */}
-                  <div className="space-x-2 gap-1 lg:gap-4 xl:gap-4 md:gap-auto lg:falex flex-row xl:flex-row md:flex-row">{article.tags.map((tag, index) => (
+                  <div className="space-x-2 gap-1 lg:gap-4 xl:gap-4 md:gap-auto lg:falex flex-row xl:flex-row md:flex-row">
+                    {article.tags.map((tag, index) => (
                     <Badge 
                       key={index} 
                       icon={<svg

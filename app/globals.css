@@ -12,9 +12,31 @@
   display: none;
 }
 
-article {
-  width: 100%;
+@media (max-width: 640px) {
+  header .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  header img {
+    width: 32px; /* Ukuran lebih kecil untuk logo di mode mobile */
+    height: 32px;
+  }
 }
+
+@media (min-width: 641px) {
+  header img {
+    width: 40px; /* Default ukuran logo */
+    height: 40px;
+  }
+}
+
+/* Tambahan transisi untuk floating bottom menu */
+.floating-nav {
+  transition: bottom 0.3s ease-in-out; /* Atur animasi saat posisi bottom berubah */
+}
+
+
 
 
 @layer base {
