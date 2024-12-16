@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/Badge';
-import { Socials } from '@/components/Socials';
+// import { Socials } from '@/components/Socials';
 import DevImage from '../DevImage';
-import {TechSkill , Services} from "@/api/tech";
+// import {TechSkill , Services} from "@/api/tech";
 import {ProfileInterface} from "@/interface/profile";
+import { TechInterface } from '@/interface/tech';
 import { Metadata } from "next";
+import { fetchTech } from '@/api/tech';
 
 
 export async function generateMetadata({props}:{props: ProfileInterface}): Promise<Metadata> {
@@ -18,7 +20,31 @@ export async function generateMetadata({props}:{props: ProfileInterface}): Promi
 }
 
 const Home = ({props}:{props: ProfileInterface}) => {
+  
+  const [techSkill, setTechSkill] = useState<TechInterface[]>([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // menambahkan props currentPage untuk menampilkan data berdasarkan pagination
+        const techData = await fetchTech();
+        setTechSkill(techData);
+        
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.log("Terjadi kesalahan saat mengambil data:", err.message);
+          
+        } else {
+          console.log("Kesalahan tidak diketahui:", err);
+          
+        }
+      } finally {
+      }
+    };
+
+    fetchData();
+  },[])
+  
   const processedPhoto = props.photo instanceof File ? URL.createObjectURL(props.photo) : props.photo;
 
   return (
@@ -44,9 +70,9 @@ const Home = ({props}:{props: ProfileInterface}) => {
 
         {/* Sosmed */}
         <div className="flex gap-x-6 mx-auto mt-8">
-          {Services.map ((item, index) => (
+          {/* {Services.map ((item, index) => (
             <Socials key={index} icon={item.icon} url={item.url} />
-          ))}
+          ))} */}
         </div>
       </div>
 
@@ -69,27 +95,23 @@ const Home = ({props}:{props: ProfileInterface}) => {
             <div className=" xl:text-left">
               <h3 className="h3 mb-8">Tech Skill</h3>
               <div className="mb-16">
-                
-                {TechSkill.map((item, index) => (
- 
+                {techSkill.map((item, index) => (
+                  
                   <div key={index} className="border-b border-border mb-4">
                     <div className="flex flex-wrap gap-2 mb-2">
-                      
                       {/* perwakilan item yang akan ditata dari array tech_list, perwakilan tech diurutkan berdasarkan techIndex */}
                       {
-                        item.tech_list.map((tech, techIndex) => (
+                        item.skills.map((skill, techIndex) => (
                           <Badge 
                             key={techIndex} 
-                            icon={tech.icon} 
-                            text={tech.text} 
-                            className={`inline-flex items-center px-3 py-[1px] rounded-full text-sm ${tech.style}`} />
+                            text={skill.skillName} 
+                            className={`inline-flex items-center px-3 py-[1px] rounded-full text-sm bg-cyan-100 text-cyan-800`} />
                         ))
                       }
 
                     </div>
-                    <div className="text-muted-foreground text-sm">{item.tech_field}</div>
+                    <div className="text-muted-foreground text-sm">{item.techName}</div>
                   </div>
-
                 ))}
               </div>
             </div>
