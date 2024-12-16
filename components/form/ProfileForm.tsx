@@ -1,18 +1,13 @@
 import React from "react";
-import { SheetFooter, SheetHeader, SheetTitle, SheetDescription } from "./ui/sheet";
+import { SheetFooter, SheetHeader, SheetTitle, SheetDescription } from "../ui/sheet";
 import { Label } from "@radix-ui/react-label";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { Textarea } from "./ui/textarea";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
+import { ProfileInterface } from "../../interface/profile";
 
 type ProfileFormProps = {
-  form: {
-    id: string;
-    fullName: string;
-    nickname: string;
-    description: string;
-    photo: File | null;
-  };
+  form: ProfileInterface;
   error: string | null;
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   handleSubmit: (e: React.FormEvent) => void;
@@ -40,24 +35,24 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
         <Input id="id" type="hidden" value={form.id} onChange={handleChange} />
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="fullName" className="text-right">
+          <Label htmlFor="name" className="text-right">
             Name
           </Label>
           <Input
-            id="fullName"
-            value={form.fullName}
+            id="name"
+            value={form.name}
             onChange={handleChange}
             className="col-span-3"
           />
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="nickname" className="text-right">
+          <Label htmlFor="nickName" className="text-right">
             Nickname
           </Label>
           <Input
-            id="nickname"
-            value={form.nickname}
+            id="nickName"
+            value={form.nickName}
             onChange={handleChange}
             className="col-span-3"
           />
@@ -77,12 +72,12 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="description" className="text-right">
+          <Label htmlFor="desc" className="text-right">
             Description
           </Label>
           <Textarea
-            id="description"
-            value={form.description}
+            id="desc"
+            value={form.desc}
             onChange={handleChange}
             className="col-span-3"
           />

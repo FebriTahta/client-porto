@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import FloatingNav2 from "@/components/FloatingNav2";
 import { Toaster } from "@/components/ui/toaster"
+// import { ProfileProvider } from "@/context/ProfileContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,8 +19,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Tahta",
-  description: "Portfolio website",
+  title: "Febri Rizqi Tahta Nugraha",
+  description: "I have a strong passion for IT, developed during my Bachelor's in Computer Engineering at Institute Adhi Tama Surabaya in 2015. I focus on effective communication, critical thinking, and collaboration, aiming to contribute value to every team I work with.",
 };
 
 export default function RootLayout({
@@ -40,11 +41,12 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <Toaster />
-              <FloatingNav2/>
-              <Header />
-                {children}
-              {/* <Footer /> */}
+                <Toaster />
+                <Header />
+                {/* <ProfileProvider>  */}
+                  <FloatingNav2 />
+                    {children}
+                {/* </ProfileProvider> */}
             </ThemeProvider>
           
       </body>

@@ -1,21 +1,14 @@
 import { useState } from "react";
+import {ProfileInterface} from "../interface/profile";
 
-type ProfileFormState = {
-  id: string;
-  fullName: string;
-  nickname: string;
-  description: string;
-  photo: File | null;
-};
-
-const useFormProfile = () => {
+export const useFormProfile = () => {
   
-  const [form, setForm] = useState<ProfileFormState>({
+  const [form, setForm] = useState<ProfileInterface>({
     id: "",
-    fullName: "",
-    nickname: "",
-    description: "",
-    photo: null,
+    name: "",
+    nickName: "",
+    desc: "",
+    photo: "",
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -41,5 +34,3 @@ const useFormProfile = () => {
 
   return { form, setForm, error, setError, handleChange };
 };
-
-export default useFormProfile;

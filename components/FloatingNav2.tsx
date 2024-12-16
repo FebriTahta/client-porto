@@ -4,14 +4,14 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { User, MessageCircle, Menu, Bookmark, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import useWindowSize from "@/hooks/useWindowSize";
+import useWindowSize from "@/hooks/use-window-size";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import SheetFormTech from "./SheetFormTech";
-import SheetFormProfile from "./SheetFormProfile";
+import SheetFormProfile from "./sheet/SheetFormProfile";
 
 export default function FloatingNav2() {
   const dragX = useMotionValue(0);
@@ -79,21 +79,20 @@ export default function FloatingNav2() {
         "dark:bg-slate-900"
       )}
     >
-      
-      <Sheet open={isProfileSheetOpen} onOpenChange={setIsProfileSheetOpen}>
-        <SheetTrigger>
-          <MenuButton>
-            <User className="h-5 w-5" />
-          </MenuButton>
-        </SheetTrigger>
-        <SheetContent side="bottom">
-          <SheetFormProfile closeSheet={() => setIsProfileSheetOpen(false)} />
-        </SheetContent>
-      </Sheet>
+        <Sheet open={isProfileSheetOpen} onOpenChange={setIsProfileSheetOpen}>
+          <SheetTrigger>
+            <MenuButton aria-label="Open Profile Form">
+              <User className="h-5 w-5" />
+            </MenuButton>
+          </SheetTrigger>
+          <SheetContent side="bottom">
+            <SheetFormProfile closeSheet={() => setIsProfileSheetOpen(false)} />
+          </SheetContent>
+        </Sheet>
 
       <Sheet open={isTechSheetOpen} onOpenChange={setIsTechSheetOpen}>
         <SheetTrigger>
-          <MenuButton>
+          <MenuButton aria-label="Open Techs Form">
             <MessageCircle className="h-5 w-5" />
           </MenuButton>
         </SheetTrigger>
@@ -102,13 +101,13 @@ export default function FloatingNav2() {
         </SheetContent>
       </Sheet>
       
-      <MenuButton>
+      <MenuButton aria-label="Menu Options">
         <Menu className="h-5 w-5" />
       </MenuButton>
-      <MenuButton>
+      <MenuButton aria-label="Bookmarks">
         <Bookmark className="h-5 w-5" />
       </MenuButton>
-      <MenuButton>
+      <MenuButton aria-label="Share">
         <Share2 className="h-5 w-5" />
       </MenuButton>
     </motion.div>

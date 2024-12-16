@@ -1,14 +1,10 @@
-export const useFormValidation = () => {
+import {ProfileInterface} from "@/interface/profile";
 
+export const useFormValidation = () => {
     // validasi untuk form profile
-    const validateProfileForm = (form: {
-      fullName: string;
-      nickname: string;
-      description: string;
-      photo: File | null;
-    }) => {
-      const { fullName, nickname, description } = form;
-      if (!fullName || !nickname || !description) {
+    const validateProfileForm = (form: ProfileInterface) => {
+      const { name, nickName, desc } = form;
+      if (!name || !nickName || !desc) {
         return { valid: false, message: "Full name, nickname, and description are required!" };
       }
       return { valid: true, message: "" };

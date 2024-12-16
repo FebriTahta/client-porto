@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import * as React from "react";
 import { MessageCircle, List, Bookmark, Share2, User } from "lucide-react";
-import SheetFormProfile from "./SheetFormProfile";
+import SheetFormProfile from "./sheet/SheetFormProfile";
 interface NavItem {
   icon: React.ReactNode;
   label: string;

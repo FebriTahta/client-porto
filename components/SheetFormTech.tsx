@@ -10,7 +10,7 @@ import { Button } from "./ui/button";
 import useFormTech from "@/hooks/useFormTech";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { useFormValidation } from "@/hooks/useFormValidation";
+import { useFormValidation } from "@/hooks/use-form-validation";
 
 const SheetFormTech = ({ closeSheet }: { closeSheet: () => void }) => {
     const { form, error, handleChange, setError } = useFormTech();
