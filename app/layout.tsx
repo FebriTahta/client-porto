@@ -5,7 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import FloatingNav2 from "@/components/FloatingNav2";
 import { Toaster } from "@/components/ui/toaster"
-// import { ProfileProvider } from "@/context/ProfileContext";
+import { ProfileProvider } from "@/context/ProfileContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -41,12 +41,12 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-                <Toaster />
-                <Header />
-                {/* <ProfileProvider>  */}
+                <ProfileProvider> 
+                  <Toaster />
+                  <Header />
                   <FloatingNav2 />
                     {children}
-                {/* </ProfileProvider> */}
+                </ProfileProvider>
             </ThemeProvider>
           
       </body>

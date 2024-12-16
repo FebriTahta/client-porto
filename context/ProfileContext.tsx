@@ -2,18 +2,11 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { fetchProfile } from "@/api/profile";
+import { ProfileInterface } from "@/interface/profile";
 
-interface Profile {
-  id: string;
-  name: string;
-  nickName: string;
-  desc: string;
-  photo: string | File | null;
-}
-
-interface ProfileContextType {
-  profile: Profile | null;
-  setProfile: (profile: Profile) => void;
+export interface ProfileContextType {
+  profile: ProfileInterface | null;
+  setProfile: (profile: ProfileInterface) => void;
 }
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
@@ -28,7 +21,7 @@ export const useProfile = () => {
 };
 
 export const ProfileProvider = ({ children }: {children: React.ReactNode}) => {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<ProfileInterface | null>(null);
 
   useEffect(() => {
     const loadProfile = async () => {

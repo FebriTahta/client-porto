@@ -2,24 +2,24 @@ import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/Badge';
 import { Socials } from '@/components/Socials';
-// import DevImage from '../DevImage';
+import DevImage from '../DevImage';
 import {TechSkill , Services} from "@/api/tech";
-// import {ProfileInterface} from "@/interface/profile";
-// import { Metadata } from "next";
+import {ProfileInterface} from "@/interface/profile";
+import { Metadata } from "next";
 
 
-// export async function generateMetadata({props}:{props: ProfileInterface}): Promise<Metadata> {
-//   const { name, desc, photo } = props;
-//   console.log(photo);
-//   return {
-//     title: `${name}`,
-//     description: `${desc}`,
-//   };
-// }
+export async function generateMetadata({props}:{props: ProfileInterface}): Promise<Metadata> {
+  const { name, desc, photo } = props;
+  console.log(photo);
+  return {
+    title: `${name}`,
+    description: `${desc}`,
+  };
+}
 
-const Home = () => {
+const Home = ({props}:{props: ProfileInterface}) => {
 
-  // const processedPhoto = props.photo instanceof File ? URL.createObjectURL(props.photo) : props.photo;
+  const processedPhoto = props.photo instanceof File ? URL.createObjectURL(props.photo) : props.photo;
 
   return (
     <div className="flex flex-col xl:flex-row gap-24">
@@ -27,17 +27,17 @@ const Home = () => {
       <div className="flex flex-col items-center text-center">
         <div className="relative w-[300px] h-[300px] mx-auto text-center">
           <div className="hidden dark:block">
-            {/* <DevImage src={processedPhoto} /> */}
+            <DevImage src={processedPhoto} />
           </div>
           <div className="block dark:hidden">
-            {/* <DevImage src={processedPhoto}/> */}
+            <DevImage src={processedPhoto}/>
           </div>
         </div>
 
         <div className='font-[family-name:var(--font-geist-mono)] text-center mt-10'>
-          <h2 className='text-lg'>a</h2>
+          <h2 className='text-lg'>{props.name}</h2>
           <div className='text-muted-foreground'>
-            <p className='text-sm'>You can call me a</p>
+            <p className='text-sm'>you can call me {props.nickName}</p>
             <p className='text-sm'>Find me on these social media</p>
           </div> 
         </div>
@@ -55,7 +55,7 @@ const Home = () => {
       <div className="flex-1 flex flex-col items-start font-[family-name:var(--font-geist-mono)] mt-[-70px]">
         <p className="text-3xl font-bold mb-4">About Me</p>
         <p className="text-muted-foreground mb-6">
-          a
+          {props.desc}
         </p>
 
         <Tabs defaultValue="skills" className="w-full">
