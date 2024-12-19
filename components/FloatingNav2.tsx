@@ -10,7 +10,8 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import SheetFormTech from "./SheetFormTech";
+import SheetFormTech from "./sheet/SheetFormTech";
+import SheetFormArticle from "./SheetFormArticle";
 import SheetFormProfile from "./sheet/SheetFormProfile";
 
 export default function FloatingNav2() {
@@ -20,6 +21,7 @@ export default function FloatingNav2() {
   // State for Sheet visibility
   const [isProfileSheetOpen, setIsProfileSheetOpen] = useState(false);
   const [isTechSheetOpen, setIsTechSheetOpen] = useState(false);
+  const [isArticleSheetOpen, setArticleSheetOpen] = useState(false);
   // Calculate background opacity based on drag position
   const opacity = useTransform(dragX, [-100, 0, 100], [0.5, 1, 0.5]);
 
@@ -79,17 +81,19 @@ export default function FloatingNav2() {
         "dark:bg-slate-900"
       )}
     >
-        <Sheet open={isProfileSheetOpen} onOpenChange={setIsProfileSheetOpen}>
-          <SheetTrigger>
-            <MenuButton aria-label="Open Profile Form">
-              <User className="h-5 w-5" />
-            </MenuButton>
-          </SheetTrigger>
-          <SheetContent side="bottom">
-            <SheetFormProfile closeSheet={() => setIsProfileSheetOpen(false)} />
-          </SheetContent>
-        </Sheet>
+      {/* sheet profile */}
+      <Sheet open={isProfileSheetOpen} onOpenChange={setIsProfileSheetOpen}>
+        <SheetTrigger>
+          <MenuButton aria-label="Open Profile Form">
+            <User className="h-5 w-5" />
+          </MenuButton>
+        </SheetTrigger>
+        <SheetContent side="bottom">
+          <SheetFormProfile closeSheet={() => setIsProfileSheetOpen(false)} />
+        </SheetContent>
+      </Sheet>
 
+      {/* sheet skill */}
       <Sheet open={isTechSheetOpen} onOpenChange={setIsTechSheetOpen}>
         <SheetTrigger>
           <MenuButton aria-label="Open Techs Form">
@@ -101,12 +105,21 @@ export default function FloatingNav2() {
         </SheetContent>
       </Sheet>
       
-      <MenuButton aria-label="Menu Options">
-        <Menu className="h-5 w-5" />
-      </MenuButton>
+      <Sheet open={isArticleSheetOpen} onOpenChange={setArticleSheetOpen}>
+        <SheetTrigger>
+        <MenuButton aria-label="Menu Options">
+          <Menu className="h-5 w-5" />
+        </MenuButton>
+        </SheetTrigger>
+        <SheetContent side="bottom">
+          <SheetFormArticle closeSheet={() => setArticleSheetOpen(false)}/>
+        </SheetContent>
+      </Sheet>
+
       <MenuButton aria-label="Bookmarks">
         <Bookmark className="h-5 w-5" />
       </MenuButton>
+      
       <MenuButton aria-label="Share">
         <Share2 className="h-5 w-5" />
       </MenuButton>

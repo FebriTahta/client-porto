@@ -11,3 +11,15 @@ export const fetchTech = async () => {
     // Mengambil data yang ada pada response.data
     return res.data;  // Mengembalikan data yang ada dalam `response.data`
 };
+
+export const postTech = async (formData: FormData) => {
+  const response = await fetch(`${base_url()}/techs`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || `Error ${response.status}: Update failed.`);
+  }
+  return response.json();
+};

@@ -1,7 +1,8 @@
 export interface TechInterface {
     id: number;
     techName: string;
-    skills: [];
+    skillName: string;
+    skills: string[];
 }
 
 export interface SkillInterface {

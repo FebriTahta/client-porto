@@ -1,22 +1,18 @@
 import { useState } from "react";
 
 const useFormTech = () => {
+  
   const [form, setForm] = useState({
     techName: "",
     skillName: "",
+    skills: [], // Properti default
   });
 
   const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-  
-    setForm((prev) => ({
-        ...prev,
-        [id]: value,
-    }));
+    setForm((prev) => ({ ...prev, [id]: value }));
   };
 
   const validateForm = (skills: string[]) => {
